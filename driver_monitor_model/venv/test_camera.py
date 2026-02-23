@@ -27,7 +27,7 @@ options = FaceLandmarkerOptions(
     result_callback=print_result
 )
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 with FaceLandmarker.create_from_options(options) as landmarker:
     timestamp = 0

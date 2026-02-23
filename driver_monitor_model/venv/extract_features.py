@@ -103,7 +103,7 @@ RIGHT_EYE = [362, 385, 387, 263, 373, 380]
 MOUTH = [61, 291, 39, 181, 0, 17, 269, 405]
 
 # ---- Start Camera ----
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 with mp.tasks.vision.FaceLandmarker.create_from_options(face_options) as face_landmarker, \
      mp.tasks.vision.PoseLandmarker.create_from_options(holistic_options) as holistic_landmarker:
