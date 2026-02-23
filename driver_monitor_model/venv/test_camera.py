@@ -3,7 +3,7 @@ import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 
-model_path = 'c:/Users/juliana/OneDrive/Documents/GitHub/TestModel/face_landmarker.task'
+model_path = 'c:/Users/juliana/OneDrive/Documents/GitHub/TestModel/models/face_landmarker.task'
 
 BaseOptions = mp.tasks.BaseOptions
 FaceLandmarker = mp.tasks.vision.FaceLandmarker
@@ -31,8 +31,7 @@ cap = cv2.VideoCapture(0)
 
 with FaceLandmarker.create_from_options(options) as landmarker:
     timestamp = 0
-    frame_count = 0
-    while cap.isOpened() and frame_count < 100:  # Limit to 100 frames for testing
+    while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
@@ -57,8 +56,6 @@ with FaceLandmarker.create_from_options(options) as landmarker:
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-
-        frame_count += 1
 
 cap.release()
 cv2.destroyAllWindows()
