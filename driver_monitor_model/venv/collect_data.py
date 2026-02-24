@@ -89,17 +89,28 @@ cap = cv2.VideoCapture(1)
 recording = False
 saved_count = 0
 
+# ---- Cache last known values ----
+last_ear = None
+last_mar = None
+last_sha = None
+
 # ---- Setup MediaPipe ----
 import os
 face_model_path = os.path.join(os.getcwd(), 'models', 'face_landmarker.task')
 pose_model_path = os.path.join(os.getcwd(), 'models', 'pose_landmarker.task')
 face_options = vision.FaceLandmarkerOptions(
     base_options=BaseOptions(model_asset_path=face_model_path),
-    running_mode=vision.RunningMode.IMAGE
+    running_mode=vision.RunningMode.IMAGE,
+    min_face_detection_confidence=0.2,
+    min_face_presence_confidence=0.2,
+    min_tracking_confidence=0.2
 )
 pose_options = vision.PoseLandmarkerOptions(
     base_options=BaseOptions(model_asset_path=pose_model_path),
-    running_mode=vision.RunningMode.IMAGE
+    running_mode=vision.RunningMode.IMAGE,
+    min_pose_detection_confidence=0.2,
+    min_pose_presence_confidence=0.2,
+    min_tracking_confidence=0.2
 )
 face_mesh = FaceLandmarker.create_from_options(face_options)
 pose = PoseLandmarker.create_from_options(pose_options)
@@ -116,23 +127,28 @@ while cap.isOpened():
     face_results = face_mesh.detect(mp_image)
     pose_results = pose.detect(mp_image)
 
-    ear = mar = sha = None
-
+    # ---- Extract and cache EAR, MAR, SHA ----
     if face_results.face_landmarks:
         lm = face_results.face_landmarks[0]
-        left_ear = calculate_EAR(lm, LEFT_EYE, w, h)
-        right_ear = calculate_EAR(lm, RIGHT_EYE, w, h)
-        ear = round((left_ear + right_ear) / 2, 4)
-        mar = calculate_MAR(lm, MOUTH, w, h)
+        try:
+            left_ear = calculate_EAR(lm, LEFT_EYE, w, h)
+            right_ear = calculate_EAR(lm, RIGHT_EYE, w, h)
+            last_ear = round((left_ear + right_ear) / 2, 4)
+            last_mar = calculate_MAR(lm, MOUTH, w, h)
+        except Exception:
+            pass  # keep last known values
 
     if pose_results.pose_landmarks:
-        sha = calculate_SHA(pose_results.pose_landmarks[0], w, h)
+        try:
+            last_sha = calculate_SHA(pose_results.pose_landmarks[0], w, h)
+        except Exception:
+            pass  # keep last known SHA
 
     # ---- Save to CSV if recording ----
-    if recording and ear is not None and sha is not None:
+    if recording and last_ear is not None and last_sha is not None:
         with open(csv_file, "a", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow([ear, mar, sha, label])
+            writer.writerow([last_ear, last_mar, last_sha, label])
         saved_count += 1
 
     # ---- Display on screen ----
@@ -146,13 +162,13 @@ while cap.isOpened():
     cv2.putText(frame, f"Saved frames: {saved_count}", (30, 115),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
-    if ear is not None:
-        cv2.putText(frame, f"EAR: {ear}", (30, 160),
+    if last_ear is not None:
+        cv2.putText(frame, f"EAR: {last_ear}", (30, 160),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        cv2.putText(frame, f"MAR: {mar}", (30, 190),
+        cv2.putText(frame, f"MAR: {last_mar}", (30, 190),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
-    if sha is not None:
-        cv2.putText(frame, f"SHA: {sha}", (30, 220),
+    if last_sha is not None:
+        cv2.putText(frame, f"SHA: {last_sha}", (30, 220),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 100, 0), 2)
 
     cv2.imshow("Data Collection", frame)
