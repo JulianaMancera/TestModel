@@ -37,20 +37,20 @@ def predict(sequence):
 # ------------------------------------------------
 print("\n--- Simulated Tests ---")
 
-# Simulate FOCUS: EAR high, MAR low, SHA near 0
-focus_sequence = [[0.35, 0.30, 0.5]] * 30
+# Simulate FOCUS using YOUR actual recorded values
+focus_sequence = [[0.357, 0.863, 6.837]] * 30
 label, conf, raw = predict(focus_sequence)
 print(f"Focus test     → Predicted: {label} ({conf:.1f}%)")
 print(f"  Raw output: distracted={raw[0]:.3f}, drowsy={raw[1]:.3f}, focus={raw[2]:.3f}")
 
-# Simulate DROWSY: EAR low, MAR high, SHA slight
-drowsy_sequence = [[0.18, 0.65, 3.0]] * 30
+# Simulate DROWSY using YOUR actual recorded values
+drowsy_sequence = [[0.372, 0.905, 3.715]] * 30
 label, conf, raw = predict(drowsy_sequence)
 print(f"Drowsy test    → Predicted: {label} ({conf:.1f}%)")
 print(f"  Raw output: distracted={raw[0]:.3f}, drowsy={raw[1]:.3f}, focus={raw[2]:.3f}")
 
-# Simulate DISTRACTED: EAR normal, MAR normal, SHA high
-distracted_sequence = [[0.35, 0.30, 20.0]] * 30
+# Simulate DISTRACTED using YOUR actual recorded values
+distracted_sequence = [[0.422, 0.931, -5.610]] * 30
 label, conf, raw = predict(distracted_sequence)
 print(f"Distracted test → Predicted: {label} ({conf:.1f}%)")
 print(f"  Raw output: distracted={raw[0]:.3f}, drowsy={raw[1]:.3f}, focus={raw[2]:.3f}")
