@@ -4,7 +4,7 @@ import tensorflow as tf
 # ------------------------------------------------
 # STEP 1 — Load the TFLite model
 # ------------------------------------------------
-interpreter = tf.lite.Interpreter(model_path='assets/driver_monitor_tcn.tflite')
+interpreter = tf.lite.Interpreter(model_path=r'c:\Users\juliana\OneDrive\Documents\GitHub\TestModel\driver_monitor_model\venv\assets\driver_monitor_tcn.tflite')
 interpreter.allocate_tensors()
 
 input_details  = interpreter.get_input_details()
