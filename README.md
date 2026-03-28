@@ -5,7 +5,7 @@
 This repository currently includes an *experimental implementation of DMS‑HybridNet (CNN + BiLSTM + Attention).*
 Please be aware that:
 
-= This is *not the final approach* we will use in our project.
+- This is *not the final approach* we will use in our project.
 - The model here is only a *test run* to check feasibility with my **own dataset.**
 - The scripts and dataset are meant for **practice and validation**, not for production deployment.
 
