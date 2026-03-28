@@ -38,12 +38,12 @@ DMS‑HybridNet combines three key components:
 - **Testing & Deployment** → Use `test_tflite.py` and `live_test.py` for real‑time monitoring
 
 ## Installation
-git clone `https://github.com/JulianaMancera/TestModel.git`
-cd `TestModel`
-python `-m venv venv`
-source venv/bin/activate   # On Linux/Mac
-venv\Scripts\activate      # On Windows
-pip install `-r requirements.txt`
+- git clone `https://github.com/JulianaMancera/TestModel.git`
+- cd `TestModel`
+- python `-m venv venv`
+- source venv/bin/activate   # On Linux/Mac
+- venv\Scripts\activate      # On Windows
+- pip install `-r requirements.txt`
 
 ## Applications
 - Real‑time driver drowsiness detection
