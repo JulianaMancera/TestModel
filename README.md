@@ -1,5 +1,5 @@
 # TestModel – Driver Monitoring System 
-&emsp; &emsp; This repository contains the implementation of DMS‑HybridNet, a hybrid deep learning architecture designed for real‑time driver monitoring under challenging conditions such as low‑light environments and occlusion. The system leverages CNNs, BiLSTMs, and Attention mechanisms to efficiently detect driver states, with deployment support via TensorFlow Lite for mobile devices.
+&emsp; &emsp; This repository contains the implementation of DMS‑HybridNet, a hybrid deep learning architecture designed for real‑time driver monitoring under challenging conditions such as low‑light environments and occlusion. The system leverages CNNs, BiLSTMs, and Attention mechanisms to efficiently detect driver states, with deployment support through a TensorFlow Lite for mobile devices.
 
 ## ⚠️Note on Model Usage
 This repository currently includes an *experimental implementation of DMS‑HybridNet (CNN + BiLSTM + Attention).*
@@ -48,4 +48,3 @@ DMS‑HybridNet combines three key components:
 ## Applications
 - Real‑time driver drowsiness detection
 - Monitoring under low‑light conditions
-- Mobile deployment using TensorFlow Lite
